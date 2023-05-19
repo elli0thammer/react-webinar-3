@@ -40,6 +40,44 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
+  addItemToCart = (code) => {
+    const cartNew = [...this.state.cart];
+    const existingItemIndex = cartNew.findIndex((item) => item.code === code);
+
+    if (existingItemIndex !== -1) {
+      const updatedCart = cartNew.map((item, index) => {
+        if (index === existingItemIndex) {
+          return {
+            ...item,
+            count: item.count + 1,
+          };
+        }
+        return item;
+      });
+      this.setState({
+        ...this.state,
+        cart: updatedCart,
+      });
+    } else {
+      const item = this.state.list.find((item) => item.code === code);
+      const newItem = {
+        ...item,
+        count: 1,
+      };
+      this.setState({
+        ...this.state,
+        cart: [...cartNew, newItem],
+      });
+    }
+  };
+
+  deleteItemToCart(code) {
+    this.setState({
+      ...this.state,
+      cart: this.state.cart.filter((id) => id.code !== code),
+    });
+  }
+
   /**
    * Добавление новой записи
    */
