@@ -19,12 +19,10 @@
 .Modal-content {
   position: relative;
   background-color: #fff;
-  width: 90%;
-  max-width: 960px;
-  height: 90%;
-  max-height: 407px;
+  width: 60%;
+  height: auto;
   border-radius: 8px;
-  overflow-y: auto;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -48,5 +46,5 @@
 }
 
 .Wrap {
-  padding-top: 70px;
+  padding: 70px 0;
 }

@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import List from "./components/list";
-import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import ModalCart from "./components/modal-cart";
 
 /**
  * Приложение
@@ -10,7 +10,7 @@ import PageLayout from "./components/page-layout";
  * @returns {React.ReactElement}
  */
 function App({store}) {
-  const {list, cart} = store.getState();
+  const {list, 	cartList, cartPriceTotal, cartCountTotal} = store.getState();
 
   const callbacks = {
     deleteItemToCart: useCallback((code) => {
@@ -25,7 +25,10 @@ function App({store}) {
   return (
     <PageLayout>
       <Head title='Приложение на чистом JS'/>
-      <Controls onDeleteItem={callbacks.deleteItemToCart} list={cart}/>
+      <ModalCart onDeleteItem={callbacks.deleteItemToCart}
+                 list={cartList}
+                 totalPrice={cartPriceTotal}
+                 totalCount={cartCountTotal}/>
       <List list={list}
             listFunction={callbacks.addItemToCart} listTitle={'Добавить'}/>
     </PageLayout>

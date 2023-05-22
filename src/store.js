@@ -41,40 +41,48 @@ class Store {
   }
 
   addItemToCart = (code) => {
-    const cartNew = [...this.state.cart];
-    const existingItemIndex = cartNew.findIndex((item) => item.code === code);
+    const { cartList, list, cartCountTotal, cartPriceTotal } = this.state;
+    const itemIndex = cartList.findIndex((item) => item.code === code);
 
-    if (existingItemIndex !== -1) {
-      const updatedCart = cartNew.map((item, index) => {
-        if (index === existingItemIndex) {
-          return {
-            ...item,
-            count: item.count + 1,
-          };
+    if (itemIndex !== -1) {
+      const updatedCartList = cartList.map((item, index) => {
+        if (index === itemIndex) {
+          return { ...item, count: item.count + 1 };
         }
         return item;
       });
+
       this.setState({
         ...this.state,
-        cart: updatedCart,
+        cartList: updatedCartList,
+        cartCountTotal: cartCountTotal,
+        cartPriceTotal: cartPriceTotal + updatedCartList[itemIndex].price,
       });
     } else {
-      const item = this.state.list.find((item) => item.code === code);
-      const newItem = {
-        ...item,
-        count: 1,
-      };
-      this.setState({
-        ...this.state,
-        cart: [...cartNew, newItem],
-      });
+      const itemToAdd = list.find((item) => item.code === code);
+
+      if (itemToAdd) {
+        const newItem = { ...itemToAdd, count: 1 };
+
+        this.setState({
+          ...this.state,
+          cartList: [...cartList, newItem],
+          cartCountTotal: cartCountTotal + 1,
+          cartPriceTotal: cartPriceTotal + newItem.price,
+        });
+      }
     }
   };
 
   deleteItemToCart(code) {
+    const cartList = [...this.state.cartList]
+    const itemToDeleteIndex = this.state.cartList.findIndex((index) => index.code === code)
+    const [removedItem] = cartList.splice(itemToDeleteIndex, 1);
+    const cartPriceTotal = this.state.cartPriceTotal - removedItem.count * removedItem.price;
+    const cartCountTotal = this.state.cartCountTotal - 1;
+
     this.setState({
-      ...this.state,
-      cart: this.state.cart.filter((id) => id.code !== code),
+      ...this.state, cartList, cartPriceTotal, cartCountTotal,
     });
   }
 

@@ -1,26 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 import './style.css';
+import {formattedPrice} from "../../utils";
 
-function Item({item, itemFunction, itemTitle}) {
+function Item(props) {
 
   const callbacks = {
     itemFunction: (e) => {
       e.stopPropagation();
-      itemFunction(item.code)
+      props.itemFunction(props.item.code)
     }
   }
 
   return (
     <div className={'Item'}>
-      <div className='Item-code'>{item.code}</div>
-      <div className='Item-title'>{item.title}</div>
-      <div className="Item-price">{item.price} ₽</div>
-      {item.count && (
-        <div className="Item-count">{item.count} шт</div>
+      <div className='Item-code'>{props.item.code}</div>
+      <div className='Item-title'>{props.item.title}</div>
+      <div className="Item-price">{formattedPrice(props.item.price)}</div>
+      {props.item.count && (
+        <div className="Item-count">{(props.item.count)} шт</div>
       )}
       <div className='Item-actions'>
-        <button onClick={callbacks.itemFunction}>{itemTitle}</button>
+        <button onClick={callbacks.itemFunction}>{props.itemTitle}</button>
       </div>
     </div>
   );

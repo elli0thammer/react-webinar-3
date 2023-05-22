@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import './style.css';
 import List from "../list";
 import Head from "../head";
+import {formattedPrice} from "../../utils";
 
-export function Modal({list, onDeleteItem, isOpen, closeModal, total}) {
+export function Modal({list, onDeleteItem, isOpen, closeModal, totalPrice}) {
   return (
     <div className={`Modal ${isOpen ? 'open-modal' : ''}`}>
       <div className="Modal-content">
@@ -16,7 +17,7 @@ export function Modal({list, onDeleteItem, isOpen, closeModal, total}) {
           <List list={list} listFunction={onDeleteItem} listTitle={'Удалить'}/>
           <div className="Modal-total">
             <strong>Итого</strong>
-            <strong>{total} ₽</strong>
+            <strong>{formattedPrice(totalPrice)}</strong>
           </div>
         </div>
       </div>
