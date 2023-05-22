@@ -33,7 +33,7 @@ Item.propTypes = {
     title: PropTypes.string,
     count: PropTypes.number
   }).isRequired,
-  onAdd: PropTypes.func,
+  itemFunction: PropTypes.func,
   itemTitle: PropTypes.string
 };
 
